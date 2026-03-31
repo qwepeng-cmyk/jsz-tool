@@ -104,7 +104,7 @@ def get_order_data_from_db(order_id):
             "receiver_area": street,
             "receiver_address": order.get('详细地址', ''),
             "receiver_zip": str(order.get('邮编', '')) or "",
-            "express_code": "顺丰标准快递",
+            "express_code": "SF",
             "details": details
         }
     except Exception as e:

@@ -112,11 +112,12 @@
 
 .data-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; /* 必须为 separate 才能让 sticky 阴影生效 */
+    border-spacing: 0;
 }
 
 .data-table th {
-    padding: 10px 16px;
+    padding: 12px 16px;
     background: #ffffff;
     color: #64748b;
     font-size: 0.75rem;
@@ -125,21 +126,70 @@
     letter-spacing: 0.05em;
     border-bottom: 1px solid #f1f5f9;
     white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    /* 允许拉伸 */
+    overflow: hidden;
+    resize: horizontal;
+    min-width: 60px;
+}
+
+/* --- 通用：序号列固定与置灰 --- */
+.data-table .sticky-col-idx {
+    position: sticky !important;
+    left: 0 !important; /* 默认固定在最左边（适用于映射/日志页） */
+    z-index: 50 !important;
+    background-color: #f8fafc !important; 
+    color: #94a3b8 !important; 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02);
+    border-right: 1px solid #e2e8f0;
+    text-align: center;
+    padding: 0 10px !important; /* 缩小左右间距，腾出空间 */
+    min-width: 50px !important;
+    max-width: 50px !important;
+}
+
+/* --- 特殊：当序号列前面有勾选框列时 --- */
+.data-table .sticky-col-1 {
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 50 !important;
+    background-color: #f1f5f9 !important;
+    border-right: 1px solid #e2e8f0;
+    padding: 0 !important;
+    text-align: center;
+    min-width: 50px !important; /* 锁定宽度 */
+    max-width: 50px !important;
+}
+
+/* 关键位移：确保两列严丝合缝不重叠 */
+.data-table .sticky-col-1 + .sticky-col-idx {
+    left: 50px !important; /* 第一列宽是 50，所以第二列从 50 开始 */
+}
+
+/* 固定后的表头 z-index 补强 */
+.data-table th.sticky-col-1,
+.data-table th.sticky-col-idx {
+    z-index: 60 !important;
 }
 
 .data-table td {
-    padding: 8px 16px;
-    border-bottom: 1px solid #f8fafc;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f1f5f9;
     font-size: 0.85rem;
     color: #334155;
     transition: background 0.15s;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .data-table tr:hover td {
-    background: #f0f9ff;
+    background: #f8fafc !important;
+}
+
+/* Hover 时固定列的底色也需要同步加深 */
+.data-table tr:hover td:first-child {
+    background-color: #e2e8f0 !important;
 }
 
 /* 状态标签：药丸风格 */
@@ -186,12 +236,18 @@
     color: #475569;
 }
 
-/* 提示文本 */
+/* 提示文本：增加左间距并优化排版 */
 .action-hint {
-    margin-top: 10px;
+    margin-top: 0; /* 改为 0，因为我们要它和按钮平级 */
+    margin-left: 24px; /* 重点：拉开与左边按钮的距离 */
     font-size: 0.8rem;
-    color: #94a3b8;
-    line-height: 1.5;
+    color: #64748b;
+    line-height: 1.6;
+    flex: 1; /* 占据剩余空间 */
+    border-left: 2px solid #e2e8f0; /* 增加一个精致的小竖线分割 */
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .empty-row {

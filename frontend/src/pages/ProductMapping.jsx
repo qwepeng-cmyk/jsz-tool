@@ -118,7 +118,7 @@ const ProductMapping = () => {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th style={{ width: '60px', textAlign: 'center' }}>序号</th>
+                  <th className="sticky-col-idx" style={{ width: '60px', textAlign: 'center' }}>序号</th>
                   <th style={{ width: 250 }} onClick={() => handleSort('keyword')}>
                     商城标题关键字 {sortIndicator('keyword')}
                   </th>
@@ -134,7 +134,7 @@ const ProductMapping = () => {
               <tbody>
                 {isAdding && (
                   <tr className="edit-row animate-fadeIn">
-                    <td style={{ textAlign: 'center', color: '#94a3b8' }}>*</td>
+                    <td className="sticky-col-idx" style={{ textAlign: 'center', color: '#94a3b8' }}>*</td>
                     <td>
                       <input 
                         className="grid-input" 
@@ -173,7 +173,7 @@ const ProductMapping = () => {
                   if (editingId === map.id) {
                     return (
                       <tr key={map.id} className="edit-row">
-                        <td style={{ textAlign: 'center', fontWeight: 600 }}>{absIndex}</td>
+                        <td className="sticky-col-idx" style={{ textAlign: 'center', fontWeight: 600 }}>{absIndex}</td>
                         <td>
                           <input className="grid-input" value={formData.keyword} onChange={(e) => setFormData({ ...formData, keyword: e.target.value })} />
                         </td>
@@ -195,7 +195,7 @@ const ProductMapping = () => {
 
                   return (
                     <tr key={map.id}>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#64748b' }}>{absIndex}</td>
+                      <td className="sticky-col-idx" style={{ textAlign: 'center', fontWeight: 600, color: '#64748b' }}>{absIndex}</td>
                       <td style={{ fontWeight: 700, color: '#0f172a' }}>{map.keyword}</td>
                       <td style={{ fontFamily: 'monospace', fontSize: '0.85rem' }}>{map.item_code}</td>
                       <td style={{ fontSize: '0.85rem' }}>{map.item_name}</td>

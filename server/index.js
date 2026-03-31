@@ -180,7 +180,9 @@ const setupCronJobs = () => {
                 console.log(`[Cron Task] 开始执行物流同步 (${new Date().toLocaleString()}) - 设定点: ${time}`);
                 const toCheck = db.prepare(`
                     SELECT order_id FROM orders 
-                    WHERE status_warehouse = 1 AND status_logistics = 0 AND express_no IS NULL
+                    WHERE status_warehouse = 1 AND status_logistics = 0 
+                      AND (express_no IS NULL OR express_no = '')
+                    ORDER BY json_extract(order_data, '$.创建时间') ASC
                 `).all().map(r => r.order_id);
                 
                 if (toCheck.length > 0) {
@@ -189,7 +191,9 @@ const setupCronJobs = () => {
 
                 const toSync = db.prepare(`
                     SELECT order_id FROM orders 
-                    WHERE status_warehouse = 1 AND status_logistics = 0 AND express_no IS NOT NULL
+                    WHERE status_warehouse = 1 AND status_logistics = 0 
+                      AND (express_no IS NOT NULL AND express_no != '')
+                    ORDER BY json_extract(order_data, '$.创建时间') ASC
                 `).all().map(r => r.order_id);
 
                 if (toSync.length > 0) {
@@ -233,7 +237,7 @@ async function internalTaskScrape(sseRes = null, trigger = 'MANUAL') {
   updateMatches.forEach(m => s_existing += parseInt(m[1], 10));
 
   const summary = result.success 
-    ? `同步完成: 成功 ${s_new} 笔, 仓库已存在 ${s_existing} 笔, 失败 0 笔`
+    ? `抓取完成: 新增 ${s_new} 笔, 存量核验 ${s_existing} 笔, 失败 0 笔`
     : "商城订单同步失败";
 
   logSync('SCRAPE', result.success ? 'SUCCESS' : 'FAIL', summary, result.log, trigger);
@@ -453,70 +457,77 @@ app.post('/api/orders/bind-warehouse', async (req, res) => {
   }
 });
 
-async function internalTaskCheckLogistics(ids, sseRes = null) {
-  const log = (msg, progress = 50) => {
-      if (sseRes) sendSSE(sseRes, { type: 'progress', message: msg, progress });
-      console.log(`[CheckLogistics] ${msg}`);
-  };
+async function internalTaskCheckLogistics(ids, sseRes = null, trigger = 'MANUAL') {
+    const log = (msg, progress = 50) => {
+        if (sseRes) sendSSE(sseRes, { type: 'progress', message: msg, progress });
+        console.log(`[CheckLogistics] ${msg}`);
+    };
 
-  let foundCount = 0;
-  for (let i = 0; i < ids.length; i++) {
-      const oid = ids[i];
-      const baseP = Math.floor(((i + 1) / ids.length) * 100);
-      try {
-          const localRow = db.prepare('SELECT platform_code FROM orders WHERE order_id = ?').get(oid);
-          let searchKey = localRow ? localRow.platform_code : oid;
-          log(`🕵️ 正在钻取单据 ${oid} ...`, baseP);
-          let erpCode = null;
-          let expressNo = null;
-          let shippingName = null;
+    let foundCount = 0;
+    let detailsLog = "";
+    for (let i = 0; i < ids.length; i++) {
+        const oid = ids[i];
+        const baseP = Math.floor(((i + 1) / ids.length) * 100);
+        try {
+            const localRow = db.prepare('SELECT platform_code FROM orders WHERE order_id = ?').get(oid);
+            let searchKey = localRow ? localRow.platform_code : oid;
+            log(`🕵️ 正在钻取单据 ${oid} ...`, baseP);
+            let erpCode = null;
+            let expressNo = null;
+            let shippingName = null;
 
-          if (searchKey.startsWith('SDO')) {
-              erpCode = searchKey;
-          } else {
-              const listResult = await queryOrders({ platform_code: searchKey, page_size: 1 });
-              if (listResult && listResult.success && listResult.orders && listResult.orders.length > 0) {
-                  erpCode = listResult.orders[0].code;
-                  expressNo = listResult.orders[0].express_no || listResult.orders[0].mail_no;
-                  shippingName = listResult.orders[0].express_name;
-              } else {
-                  const historyResult = await queryOrderHistory({ platform_code: searchKey, page_size: 1 });
-                  if (historyResult && historyResult.success && historyResult.orders && historyResult.orders.length > 0) {
-                      erpCode = historyResult.orders[0].code;
-                      expressNo = historyResult.orders[0].express_no || historyResult.orders[0].mail_no || historyResult.orders[0].deliverys?.[0]?.mail_no;
-                      shippingName = historyResult.orders[0].express_name || historyResult.orders[0].deliverys?.[0]?.express_name;
-                  }
-              }
-          }
-          if (erpCode && !expressNo) {
-              const detailResult = await queryOrderDetail({ code: erpCode });
-              if (detailResult && detailResult.success && detailResult.orderDetail) {
-                  const d = detailResult.orderDetail;
-                  expressNo = d.express_no || (d.deliverys?.[0]?.mail_no);
-                  shippingName = d.express_name || (d.deliverys?.[0]?.express_name);
-              }
-          }
-          if (erpCode && !expressNo) {
-              const pkgResult = await queryPackageDetail({ code: erpCode });
-              if (pkgResult && pkgResult.success && pkgResult.details && pkgResult.details.length > 0) {
-                  expressNo = pkgResult.details[0].mail_no;
-                  shippingName = pkgResult.details[0].express_name;
-              }
-          }
-          if (expressNo) {
-              db.prepare('UPDATE orders SET express_no = ?, shipping_name = ? WHERE order_id = ?').run(expressNo, shippingName, oid);
-              foundCount++;
-              log(`✅ 订单 ${oid} 已抓取到单号: ${shippingName} (${expressNo})`, baseP);
-          } else if (erpCode) {
-              log(`⏳ 订单 ${oid} 仓库已接单(编号:${erpCode})，但单号尚未同步`, baseP);
-          } else {
-              log(`❓ 订单 ${oid} 暂无记录`, baseP);
-          }
-      } catch (e) {
-          log(`❌ 检查 ${oid} 出错: ${e.message}`, baseP);
-      }
-  }
-  return foundCount;
+            if (searchKey.startsWith('SDO')) {
+                erpCode = searchKey;
+            } else {
+                const listResult = await queryOrders({ platform_code: searchKey, page_size: 1 });
+                if (listResult && listResult.success && listResult.orders && listResult.orders.length > 0) {
+                    erpCode = listResult.orders[0].code;
+                    expressNo = listResult.orders[0].express_no || listResult.orders[0].mail_no;
+                    shippingName = listResult.orders[0].express_name;
+                } else {
+                    const historyResult = await queryOrderHistory({ platform_code: searchKey, page_size: 1 });
+                    if (historyResult && historyResult.success && historyResult.orders && historyResult.orders.length > 0) {
+                        erpCode = historyResult.orders[0].code;
+                        expressNo = historyResult.orders[0].express_no || historyResult.orders[0].mail_no || historyResult.orders[0].deliverys?.[0]?.mail_no;
+                        shippingName = historyResult.orders[0].express_name || historyResult.orders[0].deliverys?.[0]?.express_name;
+                    }
+                }
+            }
+            if (erpCode && !expressNo) {
+                const detailResult = await queryOrderDetail({ code: erpCode });
+                if (detailResult && detailResult.success && detailResult.orderDetail) {
+                    const d = detailResult.orderDetail;
+                    expressNo = d.express_no || (d.deliverys?.[0]?.mail_no);
+                    shippingName = d.express_name || (d.deliverys?.[0]?.express_name);
+                }
+            }
+            if (erpCode && !expressNo) {
+                const pkgResult = await queryPackageDetail({ code: erpCode });
+                if (pkgResult && pkgResult.success && pkgResult.details && pkgResult.details.length > 0) {
+                    expressNo = pkgResult.details[0].mail_no;
+                    shippingName = pkgResult.details[0].express_name;
+                }
+            }
+            if (expressNo) {
+                db.prepare('UPDATE orders SET express_no = ?, shipping_name = ? WHERE order_id = ?').run(expressNo, shippingName, oid);
+                foundCount++;
+                log(`✅ 订单 ${oid} 已抓取到单号: ${shippingName} (${expressNo})`, baseP);
+                detailsLog += `[${oid}] 成功: ${expressNo}\n`;
+            } else if (erpCode) {
+                log(`⏳ 订单 ${oid} 仓库已接单(编号:${erpCode})，但单号尚未同步`, baseP);
+                detailsLog += `[${oid}] 仓库已接单，无单号\n`;
+            } else {
+                log(`❓ 订单 ${oid} 暂无记录`, baseP);
+                detailsLog += `[${oid}] 未找到记录\n`;
+            }
+        } catch (e) {
+            log(`❌ 检查 ${oid} 出错: ${e.message}`, baseP);
+            detailsLog += `[${oid}] Error: ${e.message}\n`;
+        }
+    }
+    const summary = `核验完成！共抓取到 ${foundCount} 笔新物流单号`;
+    logSync('CHECK_WAREHOUSE', 'SUCCESS', summary, detailsLog || '未发现新单号', trigger);
+    return foundCount;
 }
 
 // ======= 检查仓库发货状态 (级联穿透模式) =======
@@ -537,7 +548,7 @@ app.get('/api/orders/check-logistics', async (req, res) => {
   res.end();
 });
 
-async function internalTaskSyncLogistics(orderIds, sseRes = null) {
+async function internalTaskSyncLogistics(orderIds, sseRes = null, trigger = 'MANUAL') {
     const log = (msg, progress = 50) => {
         if (sseRes) sendSSE(sseRes, { type: 'progress', message: msg, progress });
         console.log(`[SyncLogistics] ${msg}`);
@@ -552,9 +563,13 @@ async function internalTaskSyncLogistics(orderIds, sseRes = null) {
         const baseP = Math.floor((i/total)*100);
         const row = db.prepare('SELECT status_logistics, express_no, shipping_name FROM orders WHERE order_id = ?').get(oid);
         
-        if (row && row.status_logistics) continue;
+        if (row && row.status_logistics) {
+            detailsLog += `[${oid}] 已回传过，跳过\n`;
+            continue;
+        }
         if (!row || !row.express_no) {
             log(`⚠️ 订单 ${oid} 无单号，跳过`, baseP + 10);
+            detailsLog += `[${oid}] 未匹配到发货单号，跳过\n`;
             continue;
         }
 
@@ -586,8 +601,8 @@ async function internalTaskSyncLogistics(orderIds, sseRes = null) {
             detailsLog += `[${oid}] Error: ${err}\n`;
         }
     }
-    const summary = `回传完成！共确立 ${s_count} 笔`;
-    logSync('LOGISTICS', s_count === total ? 'SUCCESS' : 'PARTIAL', summary, detailsLog);
+    const summary = s_count > 0 ? `回传完成！共确立 ${s_count} 笔` : `任务结束（当前无待回传项）`;
+    logSync('LOGISTICS', 'SUCCESS', summary, detailsLog || '未发现符合回传条件的订单（需已推送到ERP且有单号）', trigger);
     return s_count;
 }
 

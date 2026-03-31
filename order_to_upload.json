@@ -1,23 +1,24 @@
 {
   "shop_code": "301535",
   "order_type_code": "Sales",
-  "deal_datetime": "2026-03-31 11:33:00",
-  "platform_code": "gopx20260331113349468727",
+  "deal_datetime": "2026-03-31 18:53:00",
+  "platform_code": "gopx20260331185330964211",
   "warehouse_code": "301535",
-  "vip_code": "15699202927",
+  "vip_code": "13122900757",
   "buyer_memo": "",
-  "receiver_name": "米克",
-  "receiver_mobile": "15699202927",
+  "receiver_name": "赛尔比亚",
+  "receiver_mobile": "13122900757",
   "receiver_province": "北京市",
   "receiver_city": "北京市",
-  "receiver_district": "朝阳区",
-  "receiver_area": "十八里店地区",
-  "receiver_address": "十八里店地区弘善家园第一社区A区416楼20层2009房",
-  "receiver_zip": "100020",
+  "receiver_district": "昌平区",
+  "receiver_area": "南口地区",
+  "receiver_address": "南口地区南口镇南涧路29北京化工大学昌平校区",
+  "receiver_zip": "102200",
+  "express_code": "SF",
   "details": [
     {
       "item_code": "6976308020146",
-      "qty": "2",
+      "qty": "1",
       "platform_item_name": "速冻苜蓿馄饨"
     }
   ]

@@ -35,7 +35,8 @@ const SyncLogs = () => {
     const typeMap = {
         'SCRAPE': { label: '订单抓取', color: '#3b82f6' },
         'WAREHOUSE': { label: '同步仓库', color: '#10b981' },
-        'LOGISTICS': { label: '物流回传', color: '#f59e0b' }
+        'LOGISTICS': { label: '物流回传', color: '#f59e0b' },
+        'CHECK_WAREHOUSE': { label: '核验物流', color: '#8b5cf6' }
     };
 
     const statusMap = {
@@ -56,6 +57,7 @@ const SyncLogs = () => {
                                 <option value="SCRAPE">📦 订单抓取</option>
                                 <option value="WAREHOUSE">🏭 同步仓库</option>
                                 <option value="LOGISTICS">🚚 物流回传</option>
+                                <option value="CHECK_WAREHOUSE">🔍 核验物流</option>
                             </select>
                         </div>
                     </div>
@@ -72,7 +74,7 @@ const SyncLogs = () => {
                         <table className="data-table">
                             <thead>
                                 <tr>
-                                    <th style={{ width: '60px', textAlign: 'center' }}>序号</th>
+                                    <th className="sticky-col-idx" style={{ width: '60px', textAlign: 'center' }}>序号</th>
                                     <th style={{ width: '180px' }}>执行时间</th>
                                     <th style={{ width: '120px' }}>任务分类</th>
                                     <th style={{ width: '100px', textAlign: 'center' }}>触发方式</th>
@@ -89,7 +91,7 @@ const SyncLogs = () => {
                                     return (
                                         <React.Fragment key={log.id}>
                                             <tr>
-                                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#64748b' }}>{absIndex}</td>
+                                                <td className="sticky-col-idx" style={{ textAlign: 'center', fontWeight: 600, color: '#64748b' }}>{absIndex}</td>
                                                 <td style={{ fontSize: '0.8rem', color: '#64748b' }}>{log.created_at}</td>
                                                 <td>
                                                     <span style={{ color: typeMap[log.type]?.color, fontWeight: 700, fontSize: '0.85rem' }}>
