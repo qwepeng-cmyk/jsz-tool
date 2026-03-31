@@ -1,0 +1,397 @@
+/* 
+   精致化样式增强：对齐图一的高级感
+   去掉了严格的 .sync-module-wrapper 限制，确保在引入此 CSS 的页面中自然生效
+*/
+
+.page-container {
+    animation: syncFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 顶栏：Action Bar 玻璃质感增强 */
+.action-bar.glass-panel {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 24px;
+    padding: 20px 24px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px !important;
+}
+
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 按钮精致化：对齐图一的圆角与阴影 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: #3b82f6 !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+    background: #2563eb !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.btn-secondary {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.btn-secondary:hover {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background: #10b981 !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.btn-success:hover:not(:disabled) {
+    background: #059669 !important;
+    transform: translateY(-2px);
+}
+
+.btn:disabled, .btn-muted {
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+    border: 1px solid #e2e8f0 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* 数据面板与表格：极致通透感 */
+.data-panel.glass-panel {
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    border: 1px solid #e2e8f0;
+    padding: 0 !important; /* 内部表格自带间距 */
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+.panel-header {
+    padding: 24px 30px;
+    background: #f8fafc;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.table-scroll-wrapper {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    padding: 10px 16px;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #f1f5f9;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 8px 16px;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 0.85rem;
+    color: #334155;
+    transition: background 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.data-table tr:hover td {
+    background: #f0f9ff;
+}
+
+/* 状态标签：药丸风格 */
+.badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-warning { background: #fffbeb; color: #d97706; }
+.badge-success { background: #f0fdf4; color: #16a34a; }
+.badge-danger { background: #fef2f2; color: #dc2626; }
+.badge-muted { background: #f8fafc; color: #64748b; }
+.badge-primary { background: #eff6ff; color: #2563eb; }
+
+/* 通用表单元素 */
+.input-field, .grid-input {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.input-field:focus, .grid-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+/* 提示文本 */
+.action-hint {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+.empty-row {
+    padding: 60px !important;
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 0.9rem;
+    background: #ffffff !important;
+}
+
+.expand-row td {
+    padding: 0 !important;
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.expand-content {
+    padding: 1.5rem 2rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* 动画效果 */
+@keyframes syncFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-spin {
+    animation: syncSpin 1.2s linear infinite;
+}
+
+@keyframes syncSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ======= 处理进度弹窗 (Modal) ======= */
+.progress-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: modalFadeIn 0.3s ease;
+}
+
+.progress-modal {
+    width: 100%;
+    max-width: 500px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 24px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header-row h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.close-x {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.close-x:hover {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+/* 蓝色进度条 */
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #3b82f6;
+    border-radius: 10px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 核心日志区域：带侧边滚动条 */
+.progress-logs {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    height: 240px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.progress-logs::-webkit-scrollbar {
+    width: 6px;
+}
+
+.progress-logs::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.progress-logs::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.log-line {
+    font-family: 'Inter', monospace;
+    font-size: 0.85rem;
+    color: #475569;
+    line-height: 1.4;
+    word-break: break-all;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.pagination-container {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border-top: 1px solid #f1f5f9;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ======= Responsive Adjustments ======= */
+@media (max-width: 768px) {
+    .action-bar.glass-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px !important;
+    }
+
+    .action-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .panel-header {
+        padding: 16px 20px;
+        font-size: 1rem;
+    }
+
+    .pagination-container {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 20px;
+        text-align: center;
+    }
+
+    .progress-modal {
+        margin: 0 16px;
+        max-width: calc(100% - 32px);
+    }
+}
