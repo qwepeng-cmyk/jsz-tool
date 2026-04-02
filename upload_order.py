@@ -30,7 +30,7 @@ def find_item_code(title):
             cur = conn.cursor()
             cur.execute('SELECT keyword, item_code FROM product_mappings')
             for row in cur.fetchall():
-                if row[0] in title:
+                if row[0].lower() in title.lower():
                     conn.close()
                     return row[1]
             conn.close()

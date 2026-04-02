@@ -78,7 +78,8 @@
     transform: translateY(-2px);
 }
 
-.btn:disabled, .btn-muted {
+.btn:disabled,
+.btn-muted {
     background: #f1f5f9 !important;
     color: #94a3b8 !important;
     border: 1px solid #e2e8f0 !important;
@@ -92,7 +93,8 @@
     background: #ffffff !important;
     border-radius: 20px !important;
     border: 1px solid #e2e8f0;
-    padding: 0 !important; /* 内部表格自带间距 */
+    padding: 0 !important;
+    /* 内部表格自带间距 */
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
 }
@@ -112,7 +114,8 @@
 
 .data-table {
     width: 100%;
-    border-collapse: separate; /* 必须为 separate 才能让 sticky 阴影生效 */
+    border-collapse: separate;
+    /* 必须为 separate 才能让 sticky 阴影生效 */
     border-spacing: 0;
 }
 
@@ -138,14 +141,16 @@
 /* --- 通用：序号列固定与置灰 --- */
 .data-table .sticky-col-idx {
     position: sticky !important;
-    left: 0 !important; /* 默认固定在最左边（适用于映射/日志页） */
+    left: 0 !important;
+    /* 默认固定在最左边（适用于映射/日志页） */
     z-index: 50 !important;
-    background-color: #f8fafc !important; 
-    color: #94a3b8 !important; 
+    background-color: #f8fafc !important;
+    color: #94a3b8 !important;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02);
     border-right: 1px solid #e2e8f0;
     text-align: center;
-    padding: 0 10px !important; /* 缩小左右间距，腾出空间 */
+    padding: 0 10px !important;
+    /* 缩小左右间距，腾出空间 */
     min-width: 50px !important;
     max-width: 50px !important;
 }
@@ -159,13 +164,15 @@
     border-right: 1px solid #e2e8f0;
     padding: 0 !important;
     text-align: center;
-    min-width: 50px !important; /* 锁定宽度 */
+    min-width: 50px !important;
+    /* 锁定宽度 */
     max-width: 50px !important;
 }
 
 /* 关键位移：确保两列严丝合缝不重叠 */
-.data-table .sticky-col-1 + .sticky-col-idx {
-    left: 50px !important; /* 第一列宽是 50，所以第二列从 50 开始 */
+.data-table .sticky-col-1+.sticky-col-idx {
+    left: 50px !important;
+    /* 第一列宽是 50，所以第二列从 50 开始 */
 }
 
 /* 固定后的表头 z-index 补强 */
@@ -203,14 +210,34 @@
     gap: 4px;
 }
 
-.badge-warning { background: #fffbeb; color: #d97706; }
-.badge-success { background: #f0fdf4; color: #16a34a; }
-.badge-danger { background: #fef2f2; color: #dc2626; }
-.badge-muted { background: #f8fafc; color: #64748b; }
-.badge-primary { background: #eff6ff; color: #2563eb; }
+.badge-warning {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.badge-success {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.badge-danger {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.badge-muted {
+    background: #f8fafc;
+    color: #64748b;
+}
+
+.badge-primary {
+    background: #eff6ff;
+    color: #2563eb;
+}
 
 /* 通用表单元素 */
-.input-field, .grid-input {
+.input-field,
+.grid-input {
     padding: 8px 12px;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
@@ -221,7 +248,8 @@
     color: #1e293b;
 }
 
-.input-field:focus, .grid-input:focus {
+.input-field:focus,
+.grid-input:focus {
     outline: none;
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -238,13 +266,17 @@
 
 /* 提示文本：增加左间距并优化排版 */
 .action-hint {
-    margin-top: 0; /* 改为 0，因为我们要它和按钮平级 */
-    margin-left: 24px; /* 重点：拉开与左边按钮的距离 */
+    margin-top: 0;
+    /* 改为 0，因为我们要它和按钮平级 */
+    margin-left: 24px;
+    /* 重点：拉开与左边按钮的距离 */
     font-size: 0.8rem;
     color: #64748b;
     line-height: 1.6;
-    flex: 1; /* 占据剩余空间 */
-    border-left: 2px solid #e2e8f0; /* 增加一个精致的小竖线分割 */
+    flex: 1;
+    /* 占据剩余空间 */
+    border-left: 2px solid #e2e8f0;
+    /* 增加一个精致的小竖线分割 */
     padding-left: 16px;
     display: flex;
     align-items: center;
@@ -273,8 +305,15 @@
 
 /* 动画效果 */
 @keyframes syncFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .animate-spin {
@@ -282,8 +321,13 @@
 }
 
 @keyframes syncSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ======= 处理进度弹窗 (Modal) ======= */
@@ -394,8 +438,15 @@
 }
 
 @keyframes modalFadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .pagination-container {

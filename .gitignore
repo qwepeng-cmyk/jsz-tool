@@ -18,6 +18,8 @@ server_log.txt
 # Databases
 *.sqlite
 *.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
 
 # Environment / Secret
 .env
@@ -25,3 +27,9 @@ server_log.txt
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Temp Debug / Reports
+debug_*.js
+report_*.txt
+server/gen_report.js
+server/report_*.txt

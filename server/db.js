@@ -63,20 +63,20 @@ if (configCount === 0) {
 // Insert initial mappings if empty
 const count = db.prepare('SELECT count(*) as c FROM product_mappings').get().c;
 if (count === 0) {
-    const defaultMappings = [
-        { keyword: '速冻牛肉肉馕', item_code: '6976308022034', item_name: '疆手作原味速冻生牛肉烤包子(烤箱、空炸专享)' },
-        { keyword: '速冻牛肉薄皮包子', item_code: '6976308020009', item_name: '疆手作速冻生牛肉薄皮包子(蒸锅蒸煮)' },
-        { keyword: '速冻牛肉发面包子', item_code: '6976308020016', item_name: '疆手作速冻牛肉发面包子(蒸锅蒸煮)' },
-        { keyword: '速冻牛肉馄饨1kg', item_code: '6976308020115', item_name: '疆手作速冻牛肉馄饨曲曲大包装' },
-        { keyword: '速冻牛肉馄饨500g', item_code: '6976308020108', item_name: '疆手作速冻牛肉馄饨曲曲' },
-        { keyword: '速冻牛肉饺子500g', item_code: '6976308020122', item_name: '疆手作速冻牛肉水饺' },
-        { keyword: '速冻苜蓿馄饨', item_code: '6976308020146', item_name: '速冻苜蓿肉馄饨' }
-    ];
-    const insert = db.prepare('INSERT INTO product_mappings (keyword, item_code, item_name) VALUES (@keyword, @item_code, @item_name)');
-    const insertMany = db.transaction((maps) => {
-        for (const map of maps) insert.run(map);
-    });
-    insertMany(defaultMappings);
+  const defaultMappings = [
+    { keyword: '速冻牛肉肉馕', item_code: '6976308022034', item_name: '疆手作原味速冻生牛肉烤包子(烤箱、空炸专享)' },
+    { keyword: '速冻牛肉薄皮包子', item_code: '6976308020009', item_name: '疆手作速冻生牛肉薄皮包子(蒸锅蒸煮)' },
+    { keyword: '速冻牛肉发面包子', item_code: '6976308020016', item_name: '疆手作速冻牛肉发面包子(蒸锅蒸煮)' },
+    { keyword: '速冻牛肉馄饨1kg', item_code: '6976308020115', item_name: '疆手作速冻牛肉馄饨曲曲大包装' },
+    { keyword: '速冻牛肉馄饨500g', item_code: '6976308020108', item_name: '疆手作速冻牛肉馄饨曲曲' },
+    { keyword: '速冻牛肉饺子500g', item_code: '6976308020122', item_name: '疆手作速冻牛肉水饺' },
+    { keyword: '速冻苜蓿馄饨', item_code: '6976308020146', item_name: '速冻苜蓿肉馄饨' }
+  ];
+  const insert = db.prepare('INSERT INTO product_mappings (keyword, item_code, item_name) VALUES (@keyword, @item_code, @item_name)');
+  const insertMany = db.transaction((maps) => {
+    for (const map of maps) insert.run(map);
+  });
+  insertMany(defaultMappings);
 }
 
 module.exports = db;

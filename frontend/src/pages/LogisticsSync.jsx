@@ -391,6 +391,7 @@ const LogisticsSync = () => {
                           </td>
                           <td className="action-cell">
                            <div style={{display: 'flex', gap: '8px'}}>
+                            {/* 
                               <button 
                                  className="btn btn-icon btn-primary" 
                                  title="关联仓库单号"
@@ -398,6 +399,7 @@ const LogisticsSync = () => {
                               >
                                  <Link2 size={14} />
                               </button>
+                            */}
                               <button 
                                  className={`btn btn-icon ${canAct && !isProcessing && !isSyncedInStore ? 'btn-success' : 'btn-muted'}`}
                                  title={canAct ? "立即同步物流" : "当前订单状态暂不满足回传条件"}
