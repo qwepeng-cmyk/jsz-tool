@@ -57,15 +57,15 @@ const Settings = () => {
                     <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
                         <Save size={16} /> 保存配置
                     </button>
-                    {message && <span style={{marginLeft: '1rem', fontSize: '0.9rem', color: message.startsWith('✅') ? '#10b981' : '#ef4444'}}>{message}</span>}
+                    {message && <span style={{ marginLeft: '1rem', fontSize: '0.9rem', color: message.startsWith('✅') ? '#10b981' : '#ef4444' }}>{message}</span>}
                 </div>
             </div>
 
-            <div className="data-panel glass-panel" style={{maxWidth: '800px', margin: '0 auto'}}>
+            <div className="data-panel glass-panel" style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div className="panel-header">
                     <SettingsIcon size={18} /> 系统运行设置
                 </div>
-                <div style={{padding: '2rem'}}>
+                <div style={{ padding: '2rem' }}>
                     <div className="setting-item">
                         <div className="setting-label">
                             <h4>自动同步开关</h4>
@@ -73,9 +73,9 @@ const Settings = () => {
                         </div>
                         <div className="setting-control">
                             <label className="switch">
-                                <input 
-                                    type="checkbox" 
-                                    checked={config.auto_sync_enabled === '1'} 
+                                <input
+                                    type="checkbox"
+                                    checked={config.auto_sync_enabled === '1'}
                                     onChange={(e) => handleChange('auto_sync_enabled', e.target.checked ? '1' : '0')}
                                 />
                                 <span className="slider round"></span>
@@ -85,43 +85,43 @@ const Settings = () => {
 
                     <div className="setting-item">
                         <div className="setting-label">
-                            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <Clock size={16} color="#3b82f6" />
                                 <h4>订单同步时间点</h4>
                             </div>
                             <p>每天以下时间点，系统会自动抓取商城新订单并推送至仓库。</p>
-                            <span style={{fontSize: '0.8rem', color: '#94a3b8'}}>支持 24 小时格式，多个时间请用逗号隔开。例如：11:30, 15:00, 20:45</span>
+                            <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>支持 24 小时格式，多个时间请用逗号隔开。例如：11:30, 15:00, 20:45</span>
                         </div>
                         <div className="setting-control">
-                            <input 
-                                className="input-field" 
-                                value={config.cron_hours_order_sync} 
+                            <input
+                                className="input-field"
+                                value={config.cron_hours_order_sync}
                                 onChange={(e) => handleChange('cron_hours_order_sync', e.target.value)}
-                                style={{width: '200px'}}
+                                style={{ width: '200px' }}
                             />
                         </div>
                     </div>
 
                     <div className="setting-item">
                         <div className="setting-label">
-                            <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <PlayCircle size={16} color="#f59e0b" />
                                 <h4>物流回传时间点</h4>
                             </div>
                             <p>每天以下时间点，系统会自动从仓库抓取物流单号并回传至商城后台。</p>
-                            <span style={{fontSize: '0.8rem', color: '#94a3b8'}}>例如：17:20, 21:00</span>
+                            <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>例如：17:20, 21:00</span>
                         </div>
                         <div className="setting-control">
-                            <input 
-                                className="input-field" 
-                                value={config.cron_hours_logistics_sync} 
+                            <input
+                                className="input-field"
+                                value={config.cron_hours_logistics_sync}
                                 onChange={(e) => handleChange('cron_hours_logistics_sync', e.target.value)}
-                                style={{width: '200px'}}
+                                style={{ width: '200px' }}
                             />
                         </div>
                     </div>
 
-                    <div className="warning-box glass-panel" style={{marginTop: '2rem'}}>
+                    <div className="warning-box glass-panel" style={{ marginTop: '2rem' }}>
                         <Bell size={20} color="#3b82f6" />
                         <div>
                             <h5>💡 温馨提示</h5>
