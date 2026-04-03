@@ -1,40 +1,30 @@
 {
   "shop_code": "301535",
   "order_type_code": "Sales",
-  "deal_datetime": "2026-04-02 10:04:00",
-  "platform_code": "gopx20260402100437358618",
+  "deal_datetime": "2026-04-03 15:06:00",
+  "platform_code": "gopx20260403150611309287",
   "warehouse_code": "301535",
-  "vip_code": "13001952822",
+  "vip_code": "17316299323",
   "buyer_memo": "",
-  "receiver_name": "那提",
-  "receiver_mobile": "13001952822",
-  "receiver_province": "北京市",
-  "receiver_city": "北京市",
-  "receiver_district": "通州区",
-  "receiver_area": "永顺镇",
-  "receiver_address": "永顺镇朝北8080小区10号楼2单元504",
-  "receiver_zip": "101100",
+  "receiver_name": "雅哥",
+  "receiver_mobile": "17316299323",
+  "receiver_province": "上海市",
+  "receiver_city": "上海市",
+  "receiver_district": "长宁区",
+  "receiver_area": "江苏路街道",
+  "receiver_address": "江苏路街道长新小区491弄2号楼404（请绿色的门推进去右手边的快递架上谢谢",
+  "receiver_zip": "200050",
   "express_code": "SF",
   "details": [
     {
       "item_code": "6976308020146",
-      "qty": "1",
+      "qty": "2",
       "platform_item_name": "速冻苜蓿馄饨"
     },
     {
-      "item_code": "6976308020016",
-      "qty": "1",
-      "platform_item_name": "速冻牛肉发面包子（10个/袋）"
-    },
-    {
-      "item_code": "6976308020108",
-      "qty": "1",
-      "platform_item_name": "速冻牛肉馄饨500g"
-    },
-    {
-      "item_code": "6976308022034",
+      "item_code": "6976308020009",
       "qty": "2",
-      "platform_item_name": "速冻牛肉肉馕"
+      "platform_item_name": "速冻牛肉薄皮包子（10个/袋）"
     }
   ]
 }

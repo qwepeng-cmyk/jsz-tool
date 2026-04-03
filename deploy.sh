@@ -13,7 +13,7 @@ curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
 sudo yum install -y nodejs
 
 # 3. 安装 PM2
-sudo npm install -g pm2
+sudo npm install --registry=https://registry.npmmirror.com -g pm2
 
 # 4. 安装 Python 依赖
 pip3 install requests
@@ -21,8 +21,8 @@ pip3 install requests
 # 5. 进入项目目录并安装依赖
 # 假设您已在当前目录执行过 git clone
 echo "📥 正在安装前后端依赖..."
-cd server && npm install
-cd ../frontend && npm install
+cd server && npm install --registry=https://registry.npmmirror.com
+cd ../frontend && npm install --registry=https://registry.npmmirror.com
 
 # 6. 启动后端进程 (PM2)
 echo "🔥 启动后台服务..."
